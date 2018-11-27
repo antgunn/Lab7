@@ -5,17 +5,19 @@ public class GraphicalLCR extends JFrame {
 
     private LCRGame lcr;
 
-    JPanel mainPanel;
-    JPanel playersPanel;
-    JPanel dicePanel;
+    private JPanel mainPanel;
+    private JPanel playersPanel;
+    private JPanel dicePanel;
 
-    public  GraphicalLCR(LCRGame lcr) {
+    // This is a comment...
+
+    private  GraphicalLCR(LCRGame lcr) {
         this.lcr = lcr;
         mainPanel = new JPanel();
         add(mainPanel);
         setSize(350,500);
         setTitle("LCR");
-        setDefaultCloseOperation(3);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
         setLocationRelativeTo(null);
         setVisible(true);
@@ -31,7 +33,7 @@ public class GraphicalLCR extends JFrame {
         createDicePanel();
     }
 
-    public void createPlayersPanel() {
+    private void createPlayersPanel() {
         JLabel label0 = new JLabel();
         JLabel label1 = new JLabel();
         JLabel label2 = new JLabel();
@@ -54,7 +56,7 @@ public class GraphicalLCR extends JFrame {
         }
     }
 
-    public void createDicePanel() {
+    private void createDicePanel() {
         JLabel diceLabel = new JLabel();
         for (Character die:lcr.getDice()) {
             diceLabel.setText(die.toString());
