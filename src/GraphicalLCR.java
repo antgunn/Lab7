@@ -1,4 +1,5 @@
 import javax.swing.*;
+import javax.swing.plaf.DimensionUIResource;
 import java.awt.*;
 
 public class GraphicalLCR extends JFrame {
@@ -8,13 +9,14 @@ public class GraphicalLCR extends JFrame {
     private JPanel mainPanel;
     private JPanel playersPanel;
     private JPanel dicePanel;
-
-    // This is a comment...
+    private JPanel buttonsPanel;
 
     private  GraphicalLCR(LCRGame lcr) {
         this.lcr = lcr;
         mainPanel = new JPanel();
         add(mainPanel);
+
+        // Frame settings
         setSize(350,500);
         setTitle("LCR");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -24,13 +26,40 @@ public class GraphicalLCR extends JFrame {
 
         playersPanel = new JPanel();
         dicePanel = new JPanel();
+        buttonsPanel = new JPanel();
+
+        // Add other panels to mainPanel
         mainPanel.add(playersPanel);
         mainPanel.add(dicePanel);
+        mainPanel.add(buttonsPanel);
+
+        // Set layout
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.PAGE_AXIS));
+
+        // Set border around all panels
         playersPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Players"));
         dicePanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Dice"));
+        buttonsPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLineBorder(Color.black), "Actions"));
 
+        // Create panels
         createPlayersPanel();
         createDicePanel();
+        createButtonsPanel();
+    }
+
+    private void createButtonsPanel() {
+        JButton nextRoundButton = new JButton();
+        JButton exitButton = new JButton();
+        JLabel label = new JLabel();
+
+        label.setText("Next player: " + lcr.getCurrentPlayer().getName());
+
+        buttonsPanel.add(nextRoundButton);
+        buttonsPanel.add(exitButton);
+
+        nextRoundButton.setText("Next Round");
+        exitButton.setText("Exit");
+
     }
 
     private void createPlayersPanel() {
@@ -58,19 +87,26 @@ public class GraphicalLCR extends JFrame {
 
     private void createDicePanel() {
         JLabel diceLabel = new JLabel();
+        dicePanel.add(diceLabel);
+        String text = "";
         for (Character die:lcr.getDice()) {
-            diceLabel.setText(die.toString());
+            text = text + " " + die.toString();
         }
+        diceLabel.setText(text);
     }
 
     private void labelDesign(JLabel label, Player p) {
-        label.setText(p.getName() + "\n" + "Chips: " + p.getChips());
-        label.setBorder(BorderFactory.createLineBorder(Color.blue));
+        label.setText("<html>" + p.getName() + "<br>" + "Chips: " + p.getChips() + "</html>");
+        label.setBorder(BorderFactory.createLineBorder(Color.black));
+        label.setBackground(Color.white);
     }
 
 
     public static void main(String args[]) {
         LCRGame lcr = new LCRGame();
+        lcr.setDice('C');
+        lcr.setDice('R');
+        lcr.setDice('L');
         new GraphicalLCR(lcr);
     }
 }

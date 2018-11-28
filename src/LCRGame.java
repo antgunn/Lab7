@@ -103,8 +103,8 @@ public class LCRGame {
         return dice;
     }
 
-    public static void setDice(List<Character> dice) {
-        LCRGame.dice = dice;
+    public void setDice(char c) {
+        dice.add(c);
     }
 
     public void clearDice() {
@@ -115,7 +115,9 @@ public class LCRGame {
         return winner;
     }
 
-
+    public Player getCurrentPlayer() {
+        return currentPlayer;
+    }
 
     private void passToRight(Player player) {
         Player rightPlayer = getRightPlayer(player);
